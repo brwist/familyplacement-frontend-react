@@ -1,0 +1,15 @@
+.nav-tabs {
+  border: none;
+  .nav-item {
+    padding: 15px;
+    font-size: 15px;
+    a {
+      text-decoration: none;
+      &.active {
+        color: #6558f5;
+        border-bottom: 5px solid #6558f5;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}

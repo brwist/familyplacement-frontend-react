@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+// Partials Starts
+
+//Styling using globaly in projects.
+// HTML reset CSS.
+@import './reset';
+// Default Styling.
+@import 'global';
+
+@import 'grid';
+
+@import 'fonts';
+
+@import 'theme';

@@ -1,0 +1,11 @@
+$total-grid-orders: 100;
+@for $i from 1 through $total-grid-orders {
+  .grid-order-#{$i} {
+    grid-column: #{$i};
+  }
+}
+
+[class*='column-'],
+[class^=' column-'] {
+  padding: 0 15px;
+}
