@@ -1,23 +1,21 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Table } from 'reactstrap'
+import { FormGroup, Input, Table } from 'reactstrap'
 import './index.scss'
 
-const CustomTable = ({ thead, data, tableOf }) => {
+const MatchedFamiliesTable = ({ data, tableOf }) => {
   const history = useHistory()
 
   return (
     <Table borderless className="table">
-      <thead className="table-head">
-        <tr>
-          {thead.map((title) => (
-            <th key={title}>{title}</th>
-          ))}
-        </tr>
-      </thead>
       <tbody>
-        {data.map(({ name, country, createdAt, families, id }) => (
+        {data.map(({ name, country, createdAt, _id: id }) => (
           <tr key={id}>
+            <td>
+              <FormGroup check>
+                <Input type="checkbox" name="check" id="exampleCheck" />
+              </FormGroup>
+            </td>
             <th
               scope="row"
               onClick={() => history.push(`/${tableOf}?id=${id}`)}
@@ -25,7 +23,6 @@ const CustomTable = ({ thead, data, tableOf }) => {
               {id}
             </th>
             <td>{name}</td>
-            {thead.length > 4 && <td>{families}</td>}
             <td>{country}</td>
             <td>{createdAt}</td>
           </tr>
@@ -35,4 +32,4 @@ const CustomTable = ({ thead, data, tableOf }) => {
   )
 }
 
-export default CustomTable
+export default MatchedFamiliesTable

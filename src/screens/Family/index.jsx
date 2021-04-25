@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import queryString from 'query-string'
 import FamilyMiddlewares from 'store/middlewares/FamilyMiddlewares'
 import Loader from 'components/Loader'
+import NavigationActions from 'store/actions/NavigationActions'
 
 const Family = ({ location }) => {
   const {
@@ -16,6 +17,13 @@ const Family = ({ location }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(
+      NavigationActions.setActiveRoute({
+        isPlacement: false,
+        isFamily: true,
+        currentRoute: true,
+      }),
+    )
     const parsed = queryString.parse(location.search)
     dispatch(FamilyMiddlewares.getFamily(parsed.id))
   }, [])

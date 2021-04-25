@@ -16,7 +16,9 @@ const Families = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(FamilyMiddlewares.getFamilies())
+    if (families && families.length < 1) {
+      dispatch(FamilyMiddlewares.getFamilies())
+    }
   }, [])
 
   console.log('isLoading, families', { isLoading, families })

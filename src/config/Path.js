@@ -1,5 +1,5 @@
 export default class Path {
-  static BASE_URL = 'http://localhost:3000/api/v1'
+  static BASE_URL = 'http://localhost:8000/api/v1'
   static GET_FAMILIES = '/family'
   static CREATE_FAMILY = '/family/create'
   static EDIT_FAMILY = '/family/edit/'

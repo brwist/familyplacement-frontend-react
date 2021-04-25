@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FormGroup, Input } from 'reactstrap'
 import './index.scss'
 import Loader from 'components/Loader'
+import NavigationActions from 'store/actions/NavigationActions'
+import MatchedFamiliesTable from 'components/MatchedFamiliesTable'
 
 const Placement = ({ location }) => {
   const {
@@ -16,6 +18,13 @@ const Placement = ({ location }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(
+      NavigationActions.setActiveRoute({
+        isPlacement: true,
+        isFamily: false,
+        currentRoute: true,
+      }),
+    )
     const parsed = queryString.parse(location.search)
     dispatch(PlacementMiddlewares.getPlacement(parsed.id))
     console.log('location', parsed, dispatch)
@@ -57,6 +66,12 @@ const Placement = ({ location }) => {
           </div>
         </div>
       )}
+      <div className="w-100 matched-families">
+        <h2 className="pb-2">Matched Families</h2>
+        {placement?.families?.length > 0 && (
+          <MatchedFamiliesTable data={placement.families} tableOf="family" />
+        )}
+      </div>
     </main>
   )
 }

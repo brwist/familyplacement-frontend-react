@@ -1,0 +1,26 @@
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  height: 600px;
+  th,
+  td {
+    text-align: left;
+    padding: 8px;
+  }
+  .table-head {
+    border-bottom: 2px solid #bcc6cf;
+  }
+  tbody {
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+      th{
+        color: #85b9e8;
+        cursor: pointer;
+      }
+
+
+  }
+}
