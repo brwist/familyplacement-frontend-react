@@ -7,11 +7,12 @@ import queryString from 'query-string'
 import FamilyMiddlewares from 'store/middlewares/FamilyMiddlewares'
 import Loader from 'components/Loader'
 import NavigationActions from 'store/actions/NavigationActions'
+import { Link } from 'react-router-dom'
 
 const Family = ({ location }) => {
   const {
     families: {
-      family: { isLoading, data: family },
+      family: { isLoading, data: family, isError },
     },
   } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -27,13 +28,17 @@ const Family = ({ location }) => {
     const parsed = queryString.parse(location.search)
     dispatch(FamilyMiddlewares.getFamily(parsed.id))
   }, [])
+
   console.log('location', family)
   return (
     <main className="family-screen container container-padding section-centered">
       <TabSelectionBar btnText="Create Family" btnLink="create-family" />
-      {isLoading && <Loader />}
-      {!isLoading && (
+      {isLoading && !isError && <Loader />}
+      {!isLoading && !isError && (
         <div className="w-100 content-section">
+          <div className="edit-link pb-3 w-100 text-right font-weight-bold">
+            <Link to={`/edit-family?id=${family._id}`}>Edit</Link>
+          </div>
           {[
             { text: 'Family ID', value: family._id },
             { text: 'Creation date', value: family.createdAt },
@@ -64,6 +69,7 @@ const Family = ({ location }) => {
           </div>
         </div>
       )}
+      {isError && <p className="pt-4 text-danger">No Family Found!</p>}
     </main>
   )
 }

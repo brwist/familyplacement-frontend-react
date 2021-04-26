@@ -18,7 +18,7 @@ const initialState = {
   },
   totalPlacements: {
     data: [],
-    isLoading: false,
+    isLoading: true,
     isError: false,
     isSuccess: false,
     successMessage: null,

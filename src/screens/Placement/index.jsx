@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react'
-import TabSelectionBar from 'components/TabSelectionBar'
-import PlacementMiddlewares from 'store/middlewares/PlacementMiddlewares'
-import queryString from 'query-string'
-import { useDispatch, useSelector } from 'react-redux'
-import { FormGroup, Input } from 'reactstrap'
-import './index.scss'
 import Loader from 'components/Loader'
-import NavigationActions from 'store/actions/NavigationActions'
 import MatchedFamiliesTable from 'components/MatchedFamiliesTable'
+import TabSelectionBar from 'components/TabSelectionBar'
+import queryString from 'query-string'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { FormGroup, Input } from 'reactstrap'
+import NavigationActions from 'store/actions/NavigationActions'
+import PlacementMiddlewares from 'store/middlewares/PlacementMiddlewares'
+import './index.scss'
 
 const Placement = ({ location }) => {
   const {
     placements: {
-      placement: { isLoading, data: placement },
+      placement: { isLoading, data: placement, isError },
     },
   } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -33,9 +34,12 @@ const Placement = ({ location }) => {
   return (
     <main className="placement-screen container container-padding section-centered">
       <TabSelectionBar btnText="Create Placement" btnLink="create-placement" />
-      {isLoading && <Loader />}
-      {!isLoading && (
+      {isLoading && !isError && <Loader />}
+      {!isLoading && !isError && (
         <div className="w-100 content-section">
+          <div className="edit-link pb-2 w-100 font-weight-bold text-right">
+            <Link to={`/edit-placement?id=${placement._id}`}>Edit</Link>
+          </div>
           {[
             { text: 'Placement ID', value: placement._id },
             { text: 'Creation date', value: placement.createdAt },
@@ -66,12 +70,15 @@ const Placement = ({ location }) => {
           </div>
         </div>
       )}
-      <div className="w-100 matched-families">
-        <h2 className="pb-2">Matched Families</h2>
-        {placement?.families?.length > 0 && (
-          <MatchedFamiliesTable data={placement.families} tableOf="family" />
-        )}
-      </div>
+      {!isLoading && !isError && (
+        <div className="w-100 matched-families">
+          <h2 className="pb-2">Matched Families</h2>
+          {placement?.families?.length > 0 && (
+            <MatchedFamiliesTable data={placement.families} tableOf="family" />
+          )}
+        </div>
+      )}
+      {isError && <p className="pt-4 text-danger">No Placement Found!</p>}
     </main>
   )
 }

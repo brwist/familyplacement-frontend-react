@@ -10,7 +10,7 @@ import Loader from 'components/Loader'
 const Placements = () => {
   const {
     placements: {
-      totalPlacements: { isLoading, data: placements },
+      totalPlacements: { isLoading, data: placements, isError },
     },
   } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -25,14 +25,15 @@ const Placements = () => {
   return (
     <div className="placements h-100 container container-padding">
       <TabSelectionBar btnText="Create Placement" btnLink="create-placement" />
-      {isLoading && <Loader />}
-      {!isLoading && (
+      {isLoading && !isError && <Loader />}
+      {!isLoading && !isError && (
         <CustomTable
           thead={placementsData.tableData.thead}
           data={placementsData.tableData.data(placements)}
           tableOf="placement"
         />
       )}
+      {isError && <p className="pt-4 text-danger">No Placements Found!</p>}
     </div>
   )
 }

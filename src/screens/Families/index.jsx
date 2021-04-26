@@ -10,7 +10,7 @@ import TabSelectionBar from 'components/TabSelectionBar'
 const Families = () => {
   const {
     families: {
-      totalFamilies: { isLoading, data: families },
+      totalFamilies: { isLoading, data: families, isError },
     },
   } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -26,15 +26,15 @@ const Families = () => {
   return (
     <div className="families h-100 container container-padding">
       <TabSelectionBar btnText="Create Family" btnLink="create-family" />
-      {isLoading ? (
-        <Loader />
-      ) : (
+      {isLoading && !isError && <Loader />}
+      {!isLoading && !isError && (
         <CustomTable
           thead={familiesData.tableData.thead}
           data={familiesData.tableData.data(families)}
           tableOf="family"
         />
       )}
+      {isError && <p className="pt-4 text-danger">No Families Found!</p>}
     </div>
   )
 }

@@ -1,4 +1,13 @@
 .button {
   background-color: #6558f5;
   color: white;
+  border: none;
+  outline: none;
+  &:focus, &:hover, &:active{
+    outline: none !important;
+    border:none !important;
+    background: #6558f5 !important;
+    box-shadow: none !important;
+  }
+
 }
